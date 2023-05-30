@@ -1,7 +1,7 @@
 // Set url variable
 const url = "https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json"
 
-// Build initialize function and initialize
+// Define initialize function and initialize
 function init () {
     let dropdownMenu = d3.select("#selDataset");
     // Find sample names to create the dropdown options
@@ -21,7 +21,7 @@ function init () {
 };
 init();
 
-// Definie optionChanged function from index.html
+// Define optionChanged function from index.html
 function optionChanged(newSample) {
     drawPlot(newSample);
     bubblePlot(newSample);
@@ -65,10 +65,7 @@ function drawPlot(sample) {
     });
 };
 
-
-
 // Make bubble plot
-
 function bubblePlot(sample) { 
     d3.json(url).then(function(data) {
         // Create variable and store the samples array from the jsonified data
@@ -102,17 +99,17 @@ function bubblePlot(sample) {
         }
     )};
 
-    // Build a function to find, store and display the metadata
-    function showMetadata(sample) { 
-        d3.json(url).then(function(data) {        
-        let metadataArray = data.metadata;
-        // Create variable that pulls only data for matching sample and find first index
-        let filteredMetadata = metadataArray.filter(sampleId => sampleId.id == sample);
-        let sampleMetadata = filteredMetadata[0];
-        // Use D3 to find metadata panel in HTML, clear existing data and print new data
-        let metadataPanel = d3.select("#sample-metadata").html("");
-        Object.entries(sampleMetadata).forEach(([key, value]) =>
-            // Append to the metadata panel
-            metadataPanel.append("h5").text(`${key}: ${value}`)
+// Build a function to find, store and display the metadata
+function showMetadata(sample) { 
+    d3.json(url).then(function(data) {        
+    let metadataArray = data.metadata;
+    // Create variable that pulls only data for matching sample and find first index
+    let filteredMetadata = metadataArray.filter(sampleId => sampleId.id == sample);
+    let sampleMetadata = filteredMetadata[0];
+    // Use D3 to find metadata panel in HTML, clear existing data and print new data
+    let metadataPanel = d3.select("#sample-metadata").html("");
+    Object.entries(sampleMetadata).forEach(([key, value]) =>
+        // Append to the metadata panel
+        metadataPanel.append("h5").text(`${key}: ${value}`)
         )}
-    )};
+)};
